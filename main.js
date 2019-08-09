@@ -41,10 +41,9 @@ app.get('/', async (req, res, next) => {
         const responseData = response.body.data.articleFeed.items.edges || []
         let title = 'crawler'
         let news = []
-        news = responseData.filter(item => {
-          return item.node.likeCount > 50
-        })
+        news = responseData.filter(item => item.node.likeCount > 50)
         news.splice(num)
+        news.sort((a, b) => b.node.likeCount - a.node.likeCount)
         res.render('index', { news, title })
       }
     }
